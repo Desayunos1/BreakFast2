@@ -1,4 +1,4 @@
 export class Option{
-    $key: number;
+    $key: string;
     description: string;
 }

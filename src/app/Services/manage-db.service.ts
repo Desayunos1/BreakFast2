@@ -9,24 +9,42 @@ import { User } from '../models/User';
 })
 export class ManageDBService {
 
-  listOrders: AngularFireList<Order>;
-  listOptions: AngularFireList<Option>;
-  listUser: AngularFireList<User>;
-  listUserAproved: AngularFireList<User>;
+  listOrders: AngularFireList<any>;
+  listOptions: AngularFireList<any>;
+  listUser: AngularFireList<any>;
+  listUserAproved: AngularFireList<any>;
+
+  private urlOrders:string ='Orders';
+  private urlOptions:string ='Options';
+  private urlUsers:string ='Users';
+  private urlUsersAproved:string ='UsersAproved';
 
   constructor(private firebase:AngularFireDatabase) { }
 
+
   initListOrders(){
-    this.listOrders = this.firebase.list('Orders');
+    this.listOrders = this.firebase.list(this.urlOrders);
+  }
+  initListOrdersInsert(key:string){
+    this.listOrders = this.firebase.list(this.urlOrders+key);
   }
   initListOptions(){
-    this.listOptions = this.firebase.list('Options');
+    this.listOptions = this.firebase.list(this.urlOptions);
+  }
+  initListOptionsInsert(key:string){
+    this.listOptions = this.firebase.list(this.urlOptions+key);
   }
   initListUser(){
-    this.listUser = this.firebase.list('Users');
+    this.listUser = this.firebase.list(this.urlUsers);
+  }
+  initListUserInsert(key:string){
+    this.listUser = this.firebase.list(this.urlUsers+key);
   }
   initListUserAproved(){
-    this.listUser = this.firebase.list('UsersAproved');
+    this.listUserAproved = this.firebase.list(this.urlUsersAproved);
+  }
+  initListUserAprovedInsert(key:string){
+    this.listUserAproved = this.firebase.list(this.urlUsersAproved+key);
   }
 
   getListOrders(){
@@ -40,43 +58,53 @@ export class ManageDBService {
   getListUser(){
     this.initListUser();
     return this.listUser;
+  }   
+  getUser(user:string){
+    return this.firebase.list(this.urlUsers+'/'+user);
+  }   
+  getUserAcepted(user:string){
+    return this.firebase.list(this.urlUsersAproved+'/'+user);
   } 
   getListUserAproved(){
     this.initListUserAproved();
     return this.listUserAproved;
   }
+
+  //Update
   updateListOrders(order:Order){
     this.initListOrders();
-    this.listOrders.update(order.$key,order);
+    this.listOrders.update(order.$key,{tp_snack:order.tp_snack, user: order.user});
   }
   
   updateListOptions(option:Option){
-    this.initListOrders();
-    this.listOptions.update(option.$key,option);
+    this.initListOptions();
+    this.listOptions.update(option.$key,{description: option.description});
   }
   updateListUser(user:User){
     this.initListUser();
-    this.listUser.update(user.$key,user);
+    this.listUser.update(user.$key,{name: user.name,email: user.email});
   }
   updateListUserAproved(user:User){
     this.initListUserAproved();
-    this.listUserAproved.update(user.$key,user);
+    this.listUserAproved.update(user.$key,{name: user.name,email: user.email});
   }
+
+  //insert
   insertListOptions(option:Option){
-    this.initListOrders();
-    this.listOptions.push(option).set;
+    this.initListOptionsInsert(option.$key);
+    this.updateListOptions(option);
   }
   insertListOrders(order:Order){
-    this.initListOptions();
-    this.listOrders.push(order).set;
+    this.initListOrdersInsert(order.$key);
+    this.updateListOrders(order);
   }
   insertListUser(user:User){
-    this.initListUser();
-    this.listUser.push(user).set;
+    this.initListUserInsert(user.$key);
+    this.updateListUser(user);
   }
   insertListUserAproved(user:User){
     this.initListUserAproved();
-    this.listUserAproved.push(user).set;
+    this.updateListUserAproved(user);
   }
 
   //Delete

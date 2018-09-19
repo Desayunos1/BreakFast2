@@ -12,6 +12,7 @@ export class ManageDBService {
   listOrders: AngularFireList<Order>;
   listOptions: AngularFireList<Option>;
   listUser: AngularFireList<User>;
+  listUserAproved: AngularFireList<User>;
 
   constructor(private firebase:AngularFireDatabase) { }
 
@@ -24,6 +25,9 @@ export class ManageDBService {
   initListUser(){
     this.listUser = this.firebase.list('Users');
   }
+  initListUserAproved(){
+    this.listUser = this.firebase.list('UsersAproved');
+  }
 
   getListOrders(){
     this.initListOrders();
@@ -35,7 +39,11 @@ export class ManageDBService {
   }  
   getListUser(){
     this.initListUser();
-    return this.listOptions;
+    return this.listUser;
+  } 
+  getListUserAproved(){
+    this.initListUserAproved();
+    return this.listUserAproved;
   }
   updateListOrders(order:Order){
     this.initListOrders();
@@ -47,8 +55,12 @@ export class ManageDBService {
     this.listOptions.update(option.$key,option);
   }
   updateListUser(user:User){
-    this.initListOrders();
+    this.initListUser();
     this.listUser.update(user.$key,user);
+  }
+  updateListUserAproved(user:User){
+    this.initListUserAproved();
+    this.listUserAproved.update(user.$key,user);
   }
   insertListOptions(option:Option){
     this.initListOrders();
@@ -62,9 +74,20 @@ export class ManageDBService {
     this.initListUser();
     this.listUser.push(user).set;
   }
+  insertListUserAproved(user:User){
+    this.initListUserAproved();
+    this.listUserAproved.push(user).set;
+  }
+
+  //Delete
+
   deleteListUser($key: string){
     this.initListUser();
     this.listUser.remove($key);
+  }
+  deleteListUserAproved($key: string){
+    this.initListUserAproved();
+    this.listUserAproved.remove($key);
   }
   deleteListOptions($key: string){
     this.initListOptions();

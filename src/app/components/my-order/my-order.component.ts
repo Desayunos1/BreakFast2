@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Option } from '../../models/Option';
 import { NgForm, FormGroup,FormControl,Validators } from '@angular/forms';
 import { ManageDBService } from '../../Services/manage-db.service';
 import { Order } from '../../models/Order';
+import { Option } from '../../models/Option';
 import { LoginService } from '../../Services/login.service';
 
 @Component({
@@ -11,12 +11,10 @@ import { LoginService } from '../../Services/login.service';
   styleUrls: ['./my-order.component.css']
 })
 export class MyOrderComponent implements OnInit {
-  TpSnacks: Option[]= [
-    {$key: '1', description: 'Pollo'},
-    {$key: '2', description: 'Carne'}
-  ];
+  TpSnacks=[];
   ElegirSnackForm : FormGroup;
-  ValorSeleccionado: String='';
+  ValorSeleccionado:string;
+  
   
   constructor(private manageBD: ManageDBService, private manageLogin:LoginService) { }
 
@@ -25,18 +23,46 @@ export class MyOrderComponent implements OnInit {
       tipoSnack: new FormControl('',[
         Validators.required])
     });
+    this.getOptionList();
+    this.getMyOrder();
   }
 
-  addPedido(){
+  getMyOrder(){
+    this.manageBD.getMyOrder(this.manageLogin.userData.$key).snapshotChanges().subscribe(item => {
+      console.log("Consulto myorder");
+      console.log(item);
+      this.ValorSeleccionado = "";
+       let element =item[0];       
+        let x = element.payload.toJSON();
+        console.log(x);
+        this.ValorSeleccionado=x as string;
+      })
+  }
+
+  getOptionList(){
+    this.manageBD.getListOptions().snapshotChanges().subscribe(item => {
+      this.TpSnacks = Array<Option>();
+      item.forEach(element => {
+        let x = element.payload.toJSON();
+        x['$key'] = element.key;
+        this.TpSnacks.push(x as Option)
+        console.log(x);
+      })
+    });
+  }
+
+  addOrder(){
     let objeto= new Order();
-    objeto.$key=this.ElegirSnackForm.get('').value;
-    objeto.tp_snack=this.ElegirSnackForm.get('$key').value;
-    // objeto.user=this.manageLogin.
+    objeto.tp_snack=this.ElegirSnackForm.get('tipoSnack').value;
+    objeto.$key=this.manageLogin.userData.$key;
+    objeto.user=this.manageLogin.userData.name;
     this.manageBD.insertListOrders(objeto);
+    this.getMyOrder();
+    console.log("Orden agregada"+ this.ValorSeleccionado);
   }
 
-  delPedido(){
-    this.ValorSeleccionado='';
+  delOrder(){
+    this.manageBD.deleteListOrders(this.manageLogin.userData.$key);
   }
 
   getErrorMessage(control:string) {
@@ -44,6 +70,14 @@ export class MyOrderComponent implements OnInit {
     return this.ElegirSnackForm.get(control).hasError('required') ? 'Debe elegir el tipo de snack' :'';
   }
 
-
+  getTypeSnack(key: string){
+    let retorno="No encontrado";
+    this.TpSnacks.forEach(element => {
+      if(element.$key==key){
+        retorno=element.description;
+      }
+    });
+    return retorno;
+  }
 
 }

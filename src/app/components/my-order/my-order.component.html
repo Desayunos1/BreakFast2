@@ -2,12 +2,15 @@
   <form *ngIf="ValorSeleccionado==''" (ngSubmit)="addPedido()" [formGroup]="ElegirSnackForm">
     <mat-form-field>
       <mat-select formControlName="tipoSnack" placeholder="Tipo de snack" required>
-        <mat-option *ngFor="let snack of TpSnacks" [value]="snack.description">
+        <mat-option *ngFor="let snack of TpSnacks" [value]="snack.$key">
           {{snack.description}}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="ElegirSnackForm.get('tipoSnack').invalid">{{getErrorMessage("tipoSnack")}}</mat-error>
     </mat-form-field>
+    <mat-form-field>
+        <input matInput value="TpSnacks">
+      </mat-form-field>
     <button type="submit" mat-raised-button color="primary" [disabled]="!ElegirSnackForm.valid">Elegir</button>
   </form>
   <div *ngIf="ValorSeleccionado!=''">

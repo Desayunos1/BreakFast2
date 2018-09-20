@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Option } from '../../models/Option';
 import { NgForm, FormGroup,FormControl,Validators } from '@angular/forms';
+import { ManageDBService } from '../../Services/manage-db.service';
+import { Order } from '../../models/Order';
+import { LoginService } from '../../Services/login.service';
 
 @Component({
   selector: 'app-my-order',
@@ -15,7 +18,7 @@ export class MyOrderComponent implements OnInit {
   ElegirSnackForm : FormGroup;
   ValorSeleccionado: String='';
   
-  constructor() { }
+  constructor(private manageBD: ManageDBService, private manageLogin:LoginService) { }
 
   ngOnInit() {
     this.ElegirSnackForm = new FormGroup({
@@ -25,7 +28,11 @@ export class MyOrderComponent implements OnInit {
   }
 
   addPedido(){
-    this.ValorSeleccionado=this.ElegirSnackForm.get('tipoSnack').value;
+    let objeto= new Order();
+    objeto.$key=this.ElegirSnackForm.get('').value;
+    objeto.tp_snack=this.ElegirSnackForm.get('$key').value;
+    // objeto.user=this.manageLogin.
+    this.manageBD.insertListOrders(objeto);
   }
 
   delPedido(){

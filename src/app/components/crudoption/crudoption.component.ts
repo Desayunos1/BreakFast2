@@ -9,7 +9,7 @@ import { ManageDBService } from '../../Services/manage-db.service';
 })
 export class CRUDoptionComponent implements OnInit {
   AddSnackForm : FormGroup;
-  displayedColumns: string[] = ['key', 'description'];
+  displayedColumns: string[] = ['description','Eliminar'];
   dataSource = [];
   constructor(private manageBD: ManageDBService) { }
 
@@ -35,6 +35,7 @@ export class CRUDoptionComponent implements OnInit {
     let objeto =new Option();
     objeto.description=this.AddSnackForm.get('typeSnack').value;
     this.manageBD.insertListOptions(objeto);
+    this.AddSnackForm.reset();
   }
   delSnack(k: string ){
     this.manageBD.deleteListOptions(k);

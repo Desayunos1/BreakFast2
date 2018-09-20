@@ -25,6 +25,9 @@ export class ManageDBService {
   initListOrders(){
     this.listOrders = this.firebase.list(this.urlOrders);
   }
+  initMyOrder(key:string){
+    this.listOrders = this.firebase.list(this.urlOrders+'/'+key);
+  }
   initListOrdersInsert(key:string){
     this.listOrders = this.firebase.list(this.urlOrders+key);
   }
@@ -49,6 +52,10 @@ export class ManageDBService {
 
   getListOrders(){
     this.initListOrders();
+    return this.listOrders;
+  }
+  getMyOrder(key:string){
+    this.initMyOrder(key);
     return this.listOrders;
   }
   getListOptions(){

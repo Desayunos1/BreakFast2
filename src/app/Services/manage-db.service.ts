@@ -10,6 +10,7 @@ import { User } from '../models/User';
 export class ManageDBService {
 
   listOrders: AngularFireList<any>;
+  listMyOrders: AngularFireList<any>;
   listOptions: AngularFireList<any>;
   listUser: AngularFireList<any>;
   listUserAproved: AngularFireList<any>;
@@ -28,7 +29,7 @@ export class ManageDBService {
     this.listOrders = this.firebase.list(this.urlOrders);
   }
   initMyOrder(key:string){
-    this.listOrders = this.firebase.list(this.urlOrders+'/'+key);
+    this.listMyOrders = this.firebase.list(this.urlOrders+'/'+key);
   }
   initListOrdersInsert(key:string){
     this.listOrders = this.firebase.list(this.urlOrders+key);
@@ -62,7 +63,7 @@ export class ManageDBService {
   }
   getMyOrder(key:string){
     this.initMyOrder(key);
-    return this.listOrders;
+    return this.listMyOrders;
   }
   getListOptions(){
     this.initListOptions();

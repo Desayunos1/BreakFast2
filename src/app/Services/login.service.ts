@@ -64,11 +64,6 @@ export class LoginService {
                   name: this.userDetails.displayName.toString(),
                   email: this.userDetails.email.toString()
                 });
-                this.userData = {
-                  $key: this.userDetails.uid.toString(),
-                  name: this.userDetails.displayName.toString(),
-                  email: this.userDetails.email.toString()
-                };
                 this.tpUser = 2;
               } else
                 this.tpUser = 1;
@@ -99,6 +94,11 @@ export class LoginService {
         if (!this.once) {
           this.once = true;
           this.verifyUserLogged();
+          this.userData = {
+            $key: this.userDetails.uid.toString(),
+            name: this.userDetails.displayName.toString(),
+            email: this.userDetails.email.toString()
+          };
         }
 
         return true;

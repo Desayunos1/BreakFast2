@@ -1,0 +1,10 @@
+#login{
+    left: 45%;
+    position: absolute;
+    margin-top: 10%;
+}
+
+#logged{
+    left: 90%;
+    position: relative;
+}

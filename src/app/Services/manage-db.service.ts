@@ -13,11 +13,13 @@ export class ManageDBService {
   listOptions: AngularFireList<any>;
   listUser: AngularFireList<any>;
   listUserAproved: AngularFireList<any>;
+  listEnableSystem: AngularFireList<any>;
 
   private urlOrders:string ='Orders';
   private urlOptions:string ='Options';
   private urlUsers:string ='Users';
   private urlUsersAproved:string ='UsersAproved';
+  private urlEnableSystem:string ='EnableSystem';
 
   constructor(private firebase:AngularFireDatabase) { }
 
@@ -48,6 +50,10 @@ export class ManageDBService {
   }
   initListUserAprovedInsert(key:string){
     this.listUserAproved = this.firebase.list(this.urlUsersAproved+key);
+  }
+  
+  initListEnableSystem(){
+    this.listEnableSystem = this.firebase.list(this.urlEnableSystem);
   }
 
   getListOrders(){
@@ -94,6 +100,10 @@ export class ManageDBService {
   updateListUserAproved(user:User){
     this.initListUserAproved();
     this.listUserAproved.update(user.$key,{name: user.name,email: user.email});
+  }
+  updateListEnableSystem(enableSystem:Boolean){
+    this.initListEnableSystem();
+    this.listEnableSystem.update('1',{enable: enableSystem});
   }
 
   //insert

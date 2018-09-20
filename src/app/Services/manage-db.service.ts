@@ -108,8 +108,8 @@ export class ManageDBService {
 
   //insert
   insertListOptions(option:Option){
-    this.initListOptionsInsert(option.$key);
-    this.updateListOptions(option);
+    this.initListOptions();
+    this.listOptions.push({description: option.description});
   }
   insertListOrders(order:Order){
     this.initListOrdersInsert(order.$key);

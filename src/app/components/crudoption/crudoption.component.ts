@@ -1,38 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { Option } from '../../models/Option';
 import { NgForm, FormGroup,FormControl,Validators } from '@angular/forms';
+import { ManageDBService } from '../../Services/manage-db.service';
 @Component({
   selector: 'app-crudoption',
   templateUrl: './crudoption.component.html',
   styleUrls: ['./crudoption.component.css']
 })
 export class CRUDoptionComponent implements OnInit {
-  TypeSnacksList: Option[]= [{$key:"s",description:"ssda"}];
   AddSnackForm : FormGroup;
   displayedColumns: string[] = ['key', 'description'];
   dataSource = [];
-  constructor() { }
+  constructor(private manageBD: ManageDBService) { }
 
   ngOnInit() {
     this.AddSnackForm = new FormGroup({
       typeSnack: new FormControl('',[
         Validators.required])
     });
-    this.dataSource=this.TypeSnacksList;
+    this.getSnacksList();
   }
-  getSnacksList():Option[]{
-    this.dataSource=this.TypeSnacksList;
-    return this.dataSource
+  getSnacksList(){
+    this.manageBD.getListOptions().snapshotChanges().subscribe(item => {
+      this.dataSource = Array<Option>();
+      item.forEach(element => {
+        let x = element.payload.toJSON();
+        x['$key'] = element.key;
+        this.dataSource.push(x as Option)
+        console.log(x);
+      })
+    });
   }
   addSnack(){
     let objeto =new Option();
-    objeto.$key="1";
     objeto.description=this.AddSnackForm.get('typeSnack').value;
-    // this.TypeSnacksList.push({$key:"sjjkk",description:"ssda"});
-    this.TypeSnacksList.push(objeto); 
-    console.log(objeto.$key +" " + objeto.description+ "  " +this.TypeSnacksList.length);  
+    this.manageBD.insertListOptions(objeto);
   }
-  delSnack(){
+  delSnack(k: string ){
+    this.manageBD.deleteListOptions(k);
   }
 
   getErrorMessage(control:string) {

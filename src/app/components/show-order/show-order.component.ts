@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Order } from '../../models/Order';
 import {ManageDBService} from "../../Services/manage-db.service";
 import { Option } from '../../models/Option';
-import { element } from '@angular/core/src/render3/instructions';
+import { LoginService } from '../../Services/login.service';
+
 
 @Component({
   selector: 'app-show-order',
@@ -14,9 +15,18 @@ export class ShowOrderComponent implements OnInit {
   title = 'Show Order';
   
   dataSource: Order[]= [];
-  OptionSnack: Option[]= [];
+  OptionSnack = [];
+  valor : string;
 
   constructor(private enviarOrden: ManageDBService) { }
+  
+  ngOnInit() {
+    this.MostrarOrden();
+    this.getMyOption();
+      
+  }
+  displayedColumns: string[] = ['Usuario', 'tp_snack'];
+
   MostrarOrden(){
     this.enviarOrden.getListOrders().snapshotChanges()
     .subscribe(item => {
@@ -24,31 +34,33 @@ export class ShowOrderComponent implements OnInit {
       item.forEach(element => {
         let x = element.payload.toJSON();
         x['$key'] = element.key;
-        this.dataSource.push(x as Order)
+        this.dataSource.push(x as Order);
       })
     });
   }
 
   MostrarTipo(key: string){
-    let retorno ="No se encontro nada"
+    let retorno="No encontrado";
     this.OptionSnack.forEach(element => {
+      //console.log(key+"***"+element.$key);
       if(element.$key==key){
-        return element.description;
+        //console.log("igual: ");
+        retorno = element.description;
       }
-      return retorno;
+    });
+    return retorno;
+  }
+  getMyOption(){
+    this.enviarOrden.getListOptions().snapshotChanges().subscribe(item => {
+      this.OptionSnack = Array<Option>();
+      item.forEach(element => {
+        let x = element.payload.toJSON();
+        x['$key'] = element.key;
+        this.OptionSnack.push(x as Option)
+        //console.log(x);
+      })
     });
   }
-  
-  ngOnInit() {
-    this.MostrarOrden();
-    
-  }
-  displayedColumns: string[] = ['Usuario', 'tp_snack'];
-  prueba(key: string){
+ }
 
-    console.log(this.OptionSnack);
   
-  }
-  
-
-}

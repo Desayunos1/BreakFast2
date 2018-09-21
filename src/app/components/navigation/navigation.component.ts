@@ -18,6 +18,7 @@ export class NavigationComponent implements OnInit {
   ];
   valor : string;
   enableSystem: boolean;
+  UserSelected: string;
 
 
   constructor(public authService: LoginService,
@@ -27,6 +28,7 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.getSystemEnable();
+    this.readBuyer();
   }
 
   getSystemEnable(){
@@ -47,14 +49,17 @@ export class NavigationComponent implements OnInit {
     if(!this.enableSystem){
       x += 1;
     }
-    if(x==4){//verifica qu este en el tab cerrar orden
-      //console.log("entro");
-      this.openSnackBar("Esta Seguro Que Desea Finalizar Los Ingresos", "SI",0);   
-    }
-    if(x==3){//verifica qu este en el tab habilitar orden
-      //console.log("entro");
-      this.openSnackBar("Esta Seguro Que Desea habilitar Los Ingresos", "SI",1);   
-    }
+    if(this.authService.userData.$key==this.UserSelected 
+      || this.authService.userData.email=='desayunoevoluciontecnologica@gmail.com'){
+        if(x==4){//verifica qu este en el tab cerrar orden
+          //console.log("entro");
+          this.openSnackBar("Esta Seguro Que Desea Finalizar Los Ingresos", "SI",0);   
+        }
+        if(x==3){//verifica qu este en el tab habilitar orden
+          //console.log("entro");
+          this.openSnackBar("Esta Seguro Que Desea habilitar Los Ingresos", "SI",1);   
+        }
+      }
   }
 openSnackBar(message: string, action: string, tipo: number) {
     //this.refSnackBar = 
@@ -79,6 +84,17 @@ openSnackBar(message: string, action: string, tipo: number) {
   }
   openOrders(){
     this.dbService.updateListEnableSystem(true);
+  }
+  readBuyer(){
+    this.dbService.getListBuyer().snapshotChanges().subscribe(item => {
+      this.UserSelected = "";
+        if(item.length>0){
+          let element =item[0];       
+          let x = element.payload.toJSON();
+          this.UserSelected=x['user'] as string;
+          console.log("usuario encontrado");
+        }
+      });
   }
 
 }

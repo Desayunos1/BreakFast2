@@ -11,3 +11,10 @@
 form button{
     margin: 0 10px;
 }
+.sinOpciones{
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    border: 3px inset;
+    text-align: center;
+}

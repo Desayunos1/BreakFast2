@@ -29,13 +29,12 @@ export class MyOrderComponent implements OnInit {
 
   getMyOrder(){
     this.manageBD.getMyOrder(this.manageLogin.userData.$key).snapshotChanges().subscribe(item => {
-     // console.log("Consulto myorder");
-      //console.log(item);
       this.ValorSeleccionado = "";
-       let element =item[0];       
-        let x = element.payload.toJSON();
-        //console.log(x);
-        this.ValorSeleccionado=x as string;
+        if(item.length>0){
+          let element =item[0];       
+          let x = element.payload.toJSON();
+          this.ValorSeleccionado=x as string;
+        }
       })
   }
 
@@ -46,7 +45,6 @@ export class MyOrderComponent implements OnInit {
         let x = element.payload.toJSON();
         x['$key'] = element.key;
         this.TpSnacks.push(x as Option)
-        //console.log(x);
       })
     });
   }
@@ -58,7 +56,6 @@ export class MyOrderComponent implements OnInit {
     objeto.user=this.manageLogin.userData.name;
     this.manageBD.insertListOrders(objeto);
     this.getMyOrder();
-    console.log("Orden agregada"+ this.ValorSeleccionado);
   }
 
   delOrder(){

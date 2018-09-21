@@ -1,5 +1,5 @@
 <div class="divHacerPedido">
-  <form *ngIf="ValorSeleccionado==''" (ngSubmit)="addOrder()" [formGroup]="ElegirSnackForm">
+  <form *ngIf="ValorSeleccionado=='' && TpSnacks.length>0" (ngSubmit)="addOrder()" [formGroup]="ElegirSnackForm">
     <mat-form-field>
       <mat-select formControlName="tipoSnack" placeholder="Tipo de snack" required>
         <mat-option *ngFor="let snack of TpSnacks" [value]="snack.$key">
@@ -15,5 +15,8 @@
     <button mat-icon-button color="primary" (click)="delOrder()">
       <mat-icon aria-label="x">delete</mat-icon>
     </button>
+  </div>
+  <div class="sinOpciones" *ngIf="TpSnacks.length==0" >
+      <span>Lo sentimos... pero primero se deben agregar las opciones de snacks disponibles..</span>
   </div>
 </div>

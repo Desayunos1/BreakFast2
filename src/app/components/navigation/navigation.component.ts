@@ -16,20 +16,42 @@ export class NavigationComponent implements OnInit {
     {name: 'Parce le toca agunatar Hambre hasta que lo acepten !!! Por favor ccomuniquese con el Admin',
     color: 'warn'}
   ];
+  valor : string;
+  enableSystem: boolean;
+
+
   constructor(public authService: LoginService,
     public snackBar: MatSnackBar,
     public dbService: ManageDBService) { }
     selected = new FormControl(0);
 
   ngOnInit() {
+    this.getSystemEnable();
+  }
+
+  getSystemEnable(){
+    this.dbService.getListEnableSystem().snapshotChanges().subscribe(item => {
+      this.valor = "";
+        if(item.length>0){
+          let element =item[0];       
+          let x = element.payload.toJSON();
+          this.enableSystem=x['enable'] as boolean;
+          console.log(this.valor);
+        }
+      });
   }
   
   confirm(event: MatTabChangeEvent){
-    if(parseInt(event.toString())==4){//verifica qu este en el tab cerrar orden
+
+    let x =parseInt(event.toString());
+    if(!this.enableSystem){
+      x += 1;
+    }
+    if(x==4){//verifica qu este en el tab cerrar orden
       //console.log("entro");
       this.openSnackBar("Esta Seguro Que Desea Finalizar Los Ingresos", "SI",0);   
     }
-    if(parseInt(event.toString())==3){//verifica qu este en el tab habilitar orden
+    if(x==3){//verifica qu este en el tab habilitar orden
       //console.log("entro");
       this.openSnackBar("Esta Seguro Que Desea habilitar Los Ingresos", "SI",1);   
     }
@@ -40,6 +62,7 @@ openSnackBar(message: string, action: string, tipo: number) {
     this.snackBar.open(message, action, {
       duration: 5000,
     }).onAction().subscribe(()=>{
+      
       switch(tipo){
         case 0:this.closeOrders();
                 break;

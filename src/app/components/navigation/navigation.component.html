@@ -1,6 +1,6 @@
 <mat-tab-group 
 (selectedIndexChange)="confirm($event)" *ngIf="this.authService.isLoggedIn() && this.authService.tpUser==1">
-  <mat-tab label="Mi Orden"><app-my-order></app-my-order></mat-tab>
+  <mat-tab *ngIf="enableSystem" label="Mi Orden"><app-my-order></app-my-order></mat-tab>
   <mat-tab label="Ver Ordenes"><app-show-order></app-show-order></mat-tab>
   <mat-tab label="Elegir Comprador"> <app-choose-buyer></app-choose-buyer> </mat-tab>
   <mat-tab label="Habilitar Orden"><app-enable-orders></app-enable-orders></mat-tab>

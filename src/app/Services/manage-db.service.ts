@@ -83,6 +83,12 @@ export class ManageDBService {
     this.initListUserAproved();
     return this.listUserAproved;
   }
+  getListEnableSystem(){
+    this.initListEnableSystem();
+    return this.listEnableSystem;
+  }
+  
+
 
   //Update
   updateListOrders(order:Order){

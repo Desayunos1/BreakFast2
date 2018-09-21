@@ -29,12 +29,12 @@ export class MyOrderComponent implements OnInit {
 
   getMyOrder(){
     this.manageBD.getMyOrder(this.manageLogin.userData.$key).snapshotChanges().subscribe(item => {
-      console.log("Consulto myorder");
-      console.log(item);
+     // console.log("Consulto myorder");
+      //console.log(item);
       this.ValorSeleccionado = "";
        let element =item[0];       
         let x = element.payload.toJSON();
-        console.log(x);
+        //console.log(x);
         this.ValorSeleccionado=x as string;
       })
   }
@@ -46,7 +46,7 @@ export class MyOrderComponent implements OnInit {
         let x = element.payload.toJSON();
         x['$key'] = element.key;
         this.TpSnacks.push(x as Option)
-        console.log(x);
+        //console.log(x);
       })
     });
   }
@@ -72,7 +72,7 @@ export class MyOrderComponent implements OnInit {
 
   getTypeSnack(key: string){
     let retorno="No encontrado";
-    this.TpSnacks.forEach(element => {
+    this.TpSnacks.forEach(element => { 
       if(element.$key==key){
         retorno=element.description;
       }

@@ -27,14 +27,26 @@ export class NavigationComponent implements OnInit {
   confirm(event: MatTabChangeEvent){
     if(parseInt(event.toString())==4){//verifica qu este en el tab cerrar orden
       //console.log("entro");
-      this.openSnackBar("Esta Seguro Que Desea Finalizar Los Ingresos", "SI");    }
+      this.openSnackBar("Esta Seguro Que Desea Finalizar Los Ingresos", "SI",0);   
+    }
+    if(parseInt(event.toString())==3){//verifica qu este en el tab habilitar orden
+      //console.log("entro");
+      this.openSnackBar("Esta Seguro Que Desea habilitar Los Ingresos", "SI",1);   
+    }
   }
-openSnackBar(message: string, action: string) {
+openSnackBar(message: string, action: string, tipo: number) {
     //this.refSnackBar = 
+    
     this.snackBar.open(message, action, {
       duration: 5000,
     }).onAction().subscribe(()=>{
-      this.closeOrders();
+      switch(tipo){
+        case 0:this.closeOrders();
+                break;
+        case 1: this.openOrders();
+                break;
+        default: break;
+      }
     });
     //this.refSnackBar
   }
@@ -42,6 +54,10 @@ openSnackBar(message: string, action: string) {
   closeOrders(){
     this.dbService.updateListEnableSystem(false);
   }
+  openOrders(){
+    this.dbService.updateListEnableSystem(true);
+  }
+
 }
 export interface ChipColor {
   name: string;

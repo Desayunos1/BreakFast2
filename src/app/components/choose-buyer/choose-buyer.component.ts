@@ -10,10 +10,10 @@ import {ManageDBService} from "../../Services/manage-db.service";
 export class ChooseBuyerComponent implements OnInit {
   dataSource: User[]= [];
   constructor(private manageDB: ManageDBService) { }
-  displayedColumns: string[] = ['Nombre', 'email', 'Elegir'];
-
+  UserSelected:string;
   ngOnInit() {
     this.getUsersList();
+    this.readBuyer();
   }
 
   getUsersList(){
@@ -24,9 +24,24 @@ export class ChooseBuyerComponent implements OnInit {
         let x = element.payload.toJSON();
         x['$key'] = element.key;
         this.dataSource.push(x as User)
-        console.log(x);
       })
     });
+  }
+
+  saveBuyer(){
+    this.manageDB.updateListBuyer(this.UserSelected);
+  }
+
+  readBuyer(){
+    this.manageDB.getListBuyer().snapshotChanges().subscribe(item => {
+      this.UserSelected = "";
+        if(item.length>0){
+          let element =item[0];       
+          let x = element.payload.toJSON();
+          this.UserSelected=x['user'] as string;
+          console.log("usuario encontrado");
+        }
+      });
   }
 
 }

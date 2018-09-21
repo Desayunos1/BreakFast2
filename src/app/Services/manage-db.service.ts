@@ -15,12 +15,14 @@ export class ManageDBService {
   listUser: AngularFireList<any>;
   listUserAproved: AngularFireList<any>;
   listEnableSystem: AngularFireList<any>;
+  listBuyer: AngularFireList<any>;
 
   private urlOrders:string ='Orders';
   private urlOptions:string ='Options';
   private urlUsers:string ='Users';
   private urlUsersAproved:string ='UsersAproved';
   private urlEnableSystem:string ='EnableSystem';
+  private urlBuyer:string ='Buyer';
 
   constructor(private firebase:AngularFireDatabase) { }
 
@@ -37,6 +39,7 @@ export class ManageDBService {
   initListOptions(){
     this.listOptions = this.firebase.list(this.urlOptions);
   }
+
   initListOptionsInsert(key:string){
     this.listOptions = this.firebase.list(this.urlOptions+key);
   }
@@ -55,6 +58,9 @@ export class ManageDBService {
   
   initListEnableSystem(){
     this.listEnableSystem = this.firebase.list(this.urlEnableSystem);
+  }
+  initListBuyer(){
+    this.listBuyer = this.firebase.list(this.urlBuyer);
   }
 
   getListOrders(){
@@ -87,6 +93,10 @@ export class ManageDBService {
     this.initListEnableSystem();
     return this.listEnableSystem;
   }
+  getListBuyer(){
+    this.initListBuyer();
+    return this.listBuyer;
+  }
   
 
 
@@ -111,6 +121,10 @@ export class ManageDBService {
   updateListEnableSystem(enableSystem:Boolean){
     this.initListEnableSystem();
     this.listEnableSystem.update('1',{enable: enableSystem});
+  }
+  updateListBuyer(keyBuyer:string){
+    this.initListBuyer();
+    this.listBuyer.update('1',{user: keyBuyer});
   }
 
   //insert

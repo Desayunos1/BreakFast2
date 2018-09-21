@@ -34,8 +34,9 @@ export class MyOrderComponent implements OnInit {
           let element =item[0];       
           let x = element.payload.toJSON();
           this.ValorSeleccionado=x as string;
+          console.log(this.ValorSeleccionado);
         }
-      })
+      });
   }
 
   getOptionList(){

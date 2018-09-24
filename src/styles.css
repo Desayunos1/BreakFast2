@@ -54,6 +54,8 @@ body{
 }
 #logged button{
     margin-top: 7px;
+    float: right;
+    margin-right: 20px;
 }
 /* #logged button{
     background: transparent linear-gradient(to top, #000, #B40404) repeat scroll 0% 0%;

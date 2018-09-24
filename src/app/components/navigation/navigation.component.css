@@ -9,8 +9,21 @@
 
 #img{
     background-image: url("nino.jpg");
-    width: 20%;
-    position: absolute;
-    left: 51%;
-    margin-top: 10%;
+    width: 70%;
+}
+.divAccess{
+    display: table;
+    margin-top: 100px;
+    z-index: 500;
+    background: darkred;
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    border-radius: 10px 0;
+    overflow: hidden;
+}
+.divAccess * {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
 }

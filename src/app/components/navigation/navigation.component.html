@@ -6,18 +6,14 @@
   <mat-tab *ngIf="authService.userData.$key==UserSelected || authService.userData.email=='desayunoevoluciontecnologica@gmail.com'" label="Habilitar Orden"><app-enable-orders></app-enable-orders></mat-tab>
   <mat-tab *ngIf="authService.userData.$key==UserSelected || authService.userData.email=='desayunoevoluciontecnologica@gmail.com'" label="Cerrar Orden"></mat-tab>
   <mat-tab label="Administar Opciones"><app-crudoption></app-crudoption></mat-tab>
-  <mat-tab label="Habilitar Usuario"><app-enable-user></app-enable-user> </mat-tab>
+  <mat-tab *ngIf="authService.userData.$key==UserSelected || authService.userData.email=='desayunoevoluciontecnologica@gmail.com'" label="Habilitar Usuario"><app-enable-user></app-enable-user> </mat-tab>
   
   
   
 </mat-tab-group>
 
-<div  *ngIf="this.authService.isLoggedIn() && this.authService.tpUser==0">
-    <mat-chip-list class="mat-chip-list-stacked">
-        <mat-chip *ngFor="let chip of availableColors" selected [color]="chip.color" id="message">
-          {{chip.name}}
-        </mat-chip>
-      </mat-chip-list>
+<div  *ngIf="this.authService.isLoggedIn() && this.authService.tpUser==0" class="divAccess">
+    <span>Parce le toca aguantar Hambre hasta que lo acepten !!! Por favor ccomuniquese con el Admin</span>
       <img src="nino.jpg" id="img">
 </div>
 

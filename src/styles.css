@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 .mat-tab-label {
     background: #0174DF;
     border: 3px outset darkblue;
@@ -58,13 +59,6 @@ body{
     float: right;
     margin-right: 20px;
 }
-/* #logged button{
-    background: transparent linear-gradient(to top, #000, #B40404) repeat scroll 0% 0%;
-    border-radius: 0 0 5px 5px;
-    border: 3px inset #aaa;
-    color: #fff;
-    font-weight: bold
+td{
+    padding-right: 25px !important;
 }
-#logged button:hover {
-    background: transparent linear-gradient(to top, red, #B40404) repeat scroll 0% 0%;
-} */

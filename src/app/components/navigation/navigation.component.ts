@@ -68,6 +68,7 @@ openSnackBar(message: string, action: string, tipo: number) {
     
     this.snackBar.open(message, action, {
       duration: 5000,
+      verticalPosition:'top',
     }).onAction().subscribe(()=>{
       
       switch(tipo){

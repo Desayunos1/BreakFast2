@@ -13,7 +13,7 @@ import { FormControl } from '@angular/forms';
 
 export class NavigationComponent implements OnInit {
   availableColors: ChipColor[] = [
-    {name: 'Parce le toca agunatar Hambre hasta que lo acepten !!! Por favor ccomuniquese con el Admin',
+    {name: 'Parce le toca aguantar Hambre hasta que lo acepten !!! Por favor ccomuniquese con el Admin',
     color: 'warn'}
   ];
   valor : string;
@@ -48,6 +48,8 @@ export class NavigationComponent implements OnInit {
     let x =parseInt(event.toString());
     if(!this.enableSystem){
       x += 1;
+    }else{
+      x +=1;
     }
     if(this.authService.userData.$key==this.UserSelected 
       || this.authService.userData.email=='desayunoevoluciontecnologica@gmail.com'){
@@ -97,10 +99,15 @@ openSnackBar(message: string, action: string, tipo: number) {
       });
   }
 
+  prueba(){
+    console.log(this.enableSystem);
+  }
+
 }
 export interface ChipColor {
   name: string;
   color: ThemePalette;
 }
+
 
 

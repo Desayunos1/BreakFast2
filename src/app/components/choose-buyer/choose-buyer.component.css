@@ -12,3 +12,14 @@
   h3{
       text-align: center;
   }
+  .divBuyer{
+    background: #fff;
+    display: table;
+    padding:10px;
+    margin: 0 auto;
+  }
+  .divBuyer button{
+    display: block;
+    width: 100%;
+    margin: 20px 0
+  }

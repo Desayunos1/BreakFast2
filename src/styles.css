@@ -1,1 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
+.mat-tab-label {
+    background: #0174DF;
+    border: 3px outset darkblue;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 10px 10px 10px 0;
+    margin: 1px;
+    border-top: 0;
+}
+.mat-tab-label.mat-tab-label-active {
+    border-radius: 10px 10px 0 0;
+    background: transparent linear-gradient(to top right, #084B8A, #0174df) repeat scroll 0% 0%;
+}
+
+.mat-tab-label:hover {
+    background: transparent linear-gradient(to top right, #0174df, #fff) repeat scroll 0% 0%;
+}
+.marcaAgua{
+    background: rgba(255,255,255,0.7);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.mat-tab-group{
+    display: table !important;
+    margin: 0 auto;
+    margin-top: 70px;
+}
+
+.mat-tab-body-wrapper{
+    padding: 20px;
+}
+
+body{
+    background: #000 url(https://www.movistararena.co/MovistarArena/images/obra_despues.jpg) no-repeat center 0px /85%;
+}
+
+.mat-tab-body-wrapper{
+    background: rgba(0,0,0,0.6);
+    border-radius: 0 0 10px 10px;
+}
+#logged{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: #fff;
+    z-index: 200;
+}
+#logged button{
+    margin-top: 7px;
+}
+/* #logged button{
+    background: transparent linear-gradient(to top, #000, #B40404) repeat scroll 0% 0%;
+    border-radius: 0 0 5px 5px;
+    border: 3px inset #aaa;
+    color: #fff;
+    font-weight: bold
+}
+#logged button:hover {
+    background: transparent linear-gradient(to top, red, #B40404) repeat scroll 0% 0%;
+} */

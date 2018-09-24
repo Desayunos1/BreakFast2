@@ -23,7 +23,9 @@ export class ChooseBuyerComponent implements OnInit {
       item.forEach(element => {
         let x = element.payload.toJSON();
         x['$key'] = element.key;
-        this.dataSource.push(x as User)
+        if(x['$key']!="t04OOdmKzQhpi4WlUbKXjJkCTUz1"){
+          this.dataSource.push(x as User)
+        }
       })
     });
   }

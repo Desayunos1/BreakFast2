@@ -4,6 +4,8 @@ import {ManageDBService} from "../../Services/manage-db.service";
 import { Option } from '../../models/Option';
 import { LoginService } from '../../Services/login.service';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import {MatDialog} from '@angular/material';
+import { ConsolidateTableComponent } from '../consolidate-table/consolidate-table.component';
 
 
 @Component({
@@ -19,7 +21,14 @@ export class ShowOrderComponent implements OnInit {
   OptionSnack = [];
   valor : string;
 
-  constructor(private enviarOrden: ManageDBService) { }
+  constructor(private enviarOrden: ManageDBService,public dialog: MatDialog) { }
+  openDialog() {
+    const dialogRef = this.dialog.open(ConsolidateTableComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

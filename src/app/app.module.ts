@@ -125,6 +125,7 @@ import { ConsolidateTableComponent } from './components/consolidate-table/consol
     MatTreeModule,
     ReactiveFormsModule
   ],
+  entryComponents: [ShowOrderComponent, ConsolidateTableComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

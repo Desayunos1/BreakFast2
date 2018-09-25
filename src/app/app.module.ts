@@ -61,6 +61,7 @@ import { EnableOrdersComponent } from './components/enable-orders/enable-orders.
 import { CloseOrdersComponent } from './components/close-orders/close-orders.component';
 import { ChooseBuyerComponent } from './components/choose-buyer/choose-buyer.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { ConsolidateTableComponent } from './components/consolidate-table/consolidate-table.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { NavigationComponent } from './components/navigation/navigation.componen
     EnableOrdersComponent,
     CloseOrdersComponent,
     ChooseBuyerComponent,
-    NavigationComponent
+    NavigationComponent,
+    ConsolidateTableComponent
   ],
   imports: [
     BrowserModule,

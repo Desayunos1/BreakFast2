@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Order } from '../../models/Order';
 import {ManageDBService} from "../../Services/manage-db.service";
 import { Option } from '../../models/Option';
 import { LoginService } from '../../Services/login.service';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 
 @Component({
@@ -14,28 +15,33 @@ export class ShowOrderComponent implements OnInit {
 
   title = 'Show Order';
   
-  dataSource: Order[]= [];
+  dataSource= new MatTableDataSource<Order>();
   OptionSnack = [];
   valor : string;
 
   constructor(private enviarOrden: ManageDBService) { }
   
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   ngOnInit() {
     this.MostrarOrden();
     this.getMyOption();
-      
+    
   }
   displayedColumns: string[] = ['Usuario', 'tp_snack'];
 
   MostrarOrden(){
     this.enviarOrden.getListOrders().snapshotChanges()
     .subscribe(item => {
-      this.dataSource = Array<Order>();
+      this.dataSource.data = Array<Order>();
       item.forEach(element => {
         let x = element.payload.toJSON();
         x['$key'] = element.key;
-        this.dataSource.push(x as Order);
+        this.dataSource.data.push(x as Order);        
       })
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 

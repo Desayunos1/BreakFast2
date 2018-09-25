@@ -17,11 +17,7 @@ export class CloseOrdersComponent implements OnInit {
   }
   openSnackBar(message: string, action: string) {
     //this.refSnackBar = 
-    this.snackBar.open(message, action, {
-      duration: 5000,
-    }).onAction().subscribe(()=>{
-      this.closeOrders();
-    });
+    
     //this.refSnackBar
   }
 

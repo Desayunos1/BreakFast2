@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ManageDBService } from '../../Services/manage-db.service';
 
 @Component({
   selector: 'app-enable-orders',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EnableOrdersComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dbService: ManageDBService) { }
 
   ngOnInit() {
   }
-
+  openOrders(){
+    this.dbService.updateListEnableSystem(true);
+  }
 }
